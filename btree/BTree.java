@@ -56,4 +56,27 @@ public class BTree {
             }
         }
     }
+
+    /**
+     * Deletes a key from the B-Tree
+     * @param key the key to be deleted
+     */
+    public void delete(int key) {
+        if (root == null) {
+            System.out.println("The tree is empty.");
+            return;
+        }
+
+        root.delete(key);
+
+        // If the root node has 0 keys, make its first child the new root if it has children
+        if (root.n == 0) {
+            if (root.isLeaf) {
+                root = null;
+            }
+            else {
+                root = root.children[0];
+            }
+        }
+    }
 }
