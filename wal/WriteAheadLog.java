@@ -1,7 +1,5 @@
 // Write Ahead Log class for persistence support using a BTree index
 
-package btree;
-
 import java.io.*;
 import java.nio.file.*;
 import java.util.ArrayList;
@@ -35,7 +33,7 @@ public class WriteAheadLog implements Serializable, Closeable{
      * @param key The key to insert.
      * @throws IOException If an I/O error occurs.
      */
-    public synchronized void logInsert(int key) throws IOException {
+    public synchronized void logInsert(String key) throws IOException {
         // Use synchronized for thread safety
         writer.write("INSERT " + key);
         writer.newLine();
@@ -48,9 +46,24 @@ public class WriteAheadLog implements Serializable, Closeable{
      * @param key The key to delete.
      * @throws IOException If an I/O error occurs.
      */
-    public synchronized void logDelete(int key) throws IOException {
+    public synchronized void logDelete(String key) throws IOException {
         // Use synchronized for thread safety
         writer.write("DELETE " + key);
+        writer.newLine();
+        writer.flush();
+    }
+
+
+
+    /**
+     * Logs a put operation.
+     *
+     * @param key   The key to insert/update.
+     * @param value The value associated with the key.
+     * @throws IOException If an I/O error occurs.
+     */
+    public synchronized void logPut(String key, String value) throws IOException {
+        writer.write("PUT " + key + " " + value);
         writer.newLine();
         writer.flush();
     }
@@ -90,6 +103,19 @@ public class WriteAheadLog implements Serializable, Closeable{
         if (writer != null) {
             writer.close();
         }
+    }
+
+    /**
+     * Clears the WAL by deleting the file.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
+    public void clear() throws IOException {
+        close();
+        Files.deleteIfExists(Paths.get(logPath));
+
+        //Reopen writer
+        this.writer = new BufferedWriter(new FileWriter(logPath, true));
     }
 
 

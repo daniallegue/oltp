@@ -1,4 +1,4 @@
-package btree;
+// Node class from the BTree
 
 /**
  * Implements a Node from a B-Tree

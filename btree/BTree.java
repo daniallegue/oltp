@@ -1,7 +1,4 @@
-package btree;
-
-import btree.BTreeNode;
-import btree.WriteAheadLog;
+// Whole BTree class
 
 import java.io.IOException;
 import java.util.List;
