@@ -168,9 +168,17 @@ Both data structures rely on a WAL to ensure durability: all modifications are r
     - Typically opened in **append** mode so writes don’t overwrite old entries.
     - Must `flush()` changes to ensure they’re durable on disk.
 
----
+## 5. Tests 
 
-## 5. Tests (To be discussed)
+Below is a brief summary of the **stress test** results obtained when running 10,000 operations (split into 5,000 inserts, 3,000 searches, and 2,000 deletes) on both the **B-Tree** and the **LSM Tree**:
 
+**B-Tree Performance**
+- **Insert Time (5,000 ops)**: ~39.74 ms
+- **Search Time (3,000 ops)**: ~0.72 ms
+- **Delete Time (2,000 ops)**: ~24.77 ms
 
----
+**LSM Tree Performance**
+- **Insert Time (5,000 ops)**: ~64.33 ms
+- **Search Time (3,000 ops)**: ~2,538.56 ms
+- **Delete Time (2,000 ops)**: ~44.15 ms
+

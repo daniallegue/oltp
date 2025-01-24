@@ -1,4 +1,4 @@
-// Write Ahead Log class for persistence support using a BTree index
+// Write Ahead Log class for persistence
 
 import java.io.*;
 import java.nio.file.*;
@@ -52,6 +52,8 @@ public class WriteAheadLog implements Serializable, Closeable{
         writer.newLine();
         writer.flush();
     }
+
+
 
 
 
@@ -117,6 +119,4 @@ public class WriteAheadLog implements Serializable, Closeable{
         //Reopen writer
         this.writer = new BufferedWriter(new FileWriter(logPath, true));
     }
-
-
 }

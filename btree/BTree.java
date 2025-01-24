@@ -44,7 +44,7 @@ public class BTree {
      * @throws IOException If an I/O error occurs during logging.
      */
     public void insert(int key) throws IOException {
-        wal.logInsert(key);
+        wal.logInsert(String.valueOf(key));
 
         if(root == null) {
             root = new BTreeNode(t, true);
@@ -76,7 +76,7 @@ public class BTree {
      * @throws IOException If an I/O error occurs during logging.
      */
     public void delete(int key) throws IOException {
-        wal.logDelete(key);
+        wal.logDelete(String.valueOf(key));
 
         if (root == null) {
             System.out.println("The tree is empty.");
